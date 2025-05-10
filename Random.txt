@@ -1,0 +1,22 @@
+sudo apt update
+sudo apt install -y \
+    python3-pip \
+    python3-setuptools \
+    python3-wheel \
+    python3-dev \
+    build-essential \
+    libgl1-mesa-dev \
+    libgles2-mesa-dev \
+    libgstreamer1.0 \
+    libgstreamer1.0-dev \
+    libmtdev-dev \
+    libffi-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libavcodec-dev \
+    libavformat-dev \
+    libswscale-dev \
+    libglfw3-dev \
+    libinput-dev \
+    libudev-dev \
+    libegl1-mesa-dev
