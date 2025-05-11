@@ -46,7 +46,7 @@ class NetworkSender(BoxLayout):
     def send_message(self, instance):
         message = self.message_input.text
         server_ip = self.server_ip_input.text.strip()
-        port = 12345  # Make sure this matches your server
+        port = 1000  # Make sure this matches your server
 
         if not server_ip:
             print("Server IP not set.")
