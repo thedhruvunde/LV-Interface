@@ -8,6 +8,7 @@ import socket
 
 class NetworkSender(BoxLayout):
     def __init__(self, **kwargs):
+        self.s = socket.socket()
         super().__init__(orientation='vertical', **kwargs)
 
         # Show device IP
@@ -22,6 +23,11 @@ class NetworkSender(BoxLayout):
         # Message input
         self.message_input = TextInput(hint_text="Type your message here", multiline=False)
         self.add_widget(self.message_input)
+
+        #Connect button
+        connect_button = Button(text="Connect")
+        connect_button.bind(on_press=self.connect_dev)
+        self.add_widget(connect_button)
 
         # Send button
         send_button = Button(text="Send")
@@ -38,31 +44,33 @@ class NetworkSender(BoxLayout):
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(("8.8.8.8", 80))
             ip = s.getsockname()[0]
-            s.close()
             return ip
         except:
             return "Unknown"
+    def connect_dev(self, instance):
+        server_ip = self.server_ip_input.text.strip()
+        port = 1000
+        self.s.connect((server_ip, port))
 
     def send_message(self, instance):
         message = self.message_input.text
         server_ip = self.server_ip_input.text.strip()
-        port = 1000  # Make sure this matches your server
 
         if not server_ip:
             print("Server IP not set.")
             return
 
         try:
-            s = socket.socket()
-            s.connect((server_ip, port))
-            s.send(message.encode())
-            s.close()
+            self.s.send(message.encode())
             print("Message sent.")
         except Exception as e:
             print("Error:", e)
 
     def close_app(self, instance):
+        self.s.close()
         App.get_running_app().stop()
+
+
 
 
 class MyApp(App):
